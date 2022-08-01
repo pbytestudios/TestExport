@@ -1,11 +1,11 @@
 name: godot-export
 on:
-  # workflow_dispatch:
-  #   branches:
-  #     - master #limit us to masteer for now. If we want to choose, comment this out...
-  push:
-    tags:
-      - "v*"
+  workflow_dispatch:
+    branches:
+      - master #limit us to masteer for now. If we want to choose, comment this out...
+  # push:
+  #   tags:
+  #     - "v*"
 jobs:
   export_game:
     runs-on: ubuntu-latest
