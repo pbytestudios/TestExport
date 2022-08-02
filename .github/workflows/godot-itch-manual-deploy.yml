@@ -1,44 +1,11 @@
-name: godot-export-on-tag
+name: godot-manual-itch-deploy
 on:
-  push:
-    tags:
-      - "v*"
-jobs:
-  export_game:
-    runs-on: ubuntu-latest
-    name: Export Job
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3.0.2
-        with:
-          fetch-depth: 0
-          lfs: true
-      - name: get tag from version
-        id: tag_version
-        run: |
-          echo ::set-output name=TAG_VERSION::${GITHUB_REF#refs/tags/v}
-      - name: install wine
-        id: install_wine
-        run: |
-          sudo apt install wine64
-          echo ::set-output name=WINE_PATH::$(which wine64)
-      - name: export game
-        id: export
-        uses: firebelley/godot-export@v4.1.0
-        with:
-          godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/3.5/rc8/Godot_v3.5-rc8_linux_headless.64.zip
-          godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/3.5/rc8/Godot_v3.5-rc8_export_templates.tpz
-          relative_project_path: ./project
-          use_preset_export_path: true
-          archive_output: true
-          wine_path: ${{ steps.install_wine.outputs.WINE_PATH }}
-      - name: create release
-        uses: softprops/action-gh-release@v0.1.14
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          generate_release_notes: true
-          tag_name: ${{ steps.tag_version.outputs.TAG_VERSION }}
-          files: ${{ steps.export.outputs.archive_directory }}/* # Added "/*" at the end is glob pattern match for this action
+  workflow_dispatch:
+      inputs:
+        tag_name:
+          description: 'Name of the Tag to put the release under'     
+          required: true
+          type: string
       - name: Install Butler
         id: install_butler
         run: |
@@ -80,7 +47,7 @@ jobs:
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
           ITCH_USER: pixelbyte
-          BASE_URL: ${{ github.server_url }}/${{ github.repository }}/releases/download/${{ steps.tag_version.outputs.TAG_VERSION }}
+          BASE_URL: ${{ github.server_url }}/${{ github.repository }}/releases/download/${{ github.event.inputs.tag_name }}
           ITCH_GAME: example-project
           HTML5: HTML5.zip
           WIN: Windows.zip
@@ -89,4 +56,4 @@ jobs:
           # ANDROID: Android.zip
           #Set the itch deploy version to the tag text
           #assumes  we use this step in a workflow with a tag_version step
-          VERSION: ${{ steps.tag_version.outputs.TAG_VERSION }}
+          VERSION: ${{ github.event.inputs.tag_name }}
