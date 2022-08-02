@@ -44,8 +44,9 @@ jobs:
         run: |
           curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default \
           && unzip butler.zip \
-          && cp butler /usr/bin \
-          && chmod +x /usr/bin/butler
+          && cp butler /home/runner/.local/bin \
+          && chmod +x /home/runner/.local/bin/butler
+
       - name: Run Butler Push
         id: butler_push
         run: |
