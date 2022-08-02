@@ -10,7 +10,7 @@ jobs:
         uses: battila7/get-version-action@v2
   godot_export_on_tag:
     needs: get_version
-    uses: ./github/workflows/godot-export.yml
+    uses: ./.github/workflows/godot-export.yml
     with:
       godot_download_sub_path: 3.5/rc8/Godot_v3.5-rc8
       tag_name: ${{ needs.get_version.outputs.version }}
