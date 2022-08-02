@@ -11,7 +11,7 @@ on:
           required: true
           type: string
         itch_project:
-          description: 'Name of the itch project you'll be deploying to'
+          description: 'Name of the itch project you will deploy to'
           required: true
           type: string
 jobs:
