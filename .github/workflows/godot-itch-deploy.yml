@@ -38,7 +38,7 @@ jobs:
               versionArgument="--userversion-file ${VERSION_FILE}"
           fi
           if [ -n "$HTML5" ]; then
-              if [ test -f "$BASE_URL/$HTML5" ]; then
+              if [ -f "$BASE_URL/$HTML5" ]; then
                 echo "butler push \"$BASE_URL/$HTML5\" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}"
                 butler push "$BASE_URL/$HTML5" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}
               else
@@ -46,7 +46,7 @@ jobs:
               fi
           fi
           if [ -n "$WIN" ]; then
-              if [ test -f "$BASE_URL/$WIN" ]; then
+              if [ -f "$BASE_URL/$WIN" ]; then
                 echo "butler push \"$BASE_URL/$WIN\" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}"
                 butler push "$BASE_URL/$WIN" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}
               else
@@ -54,7 +54,7 @@ jobs:
               fi
           fi
           if [ -n "$OSX" ]; then
-              if [ test -f "$BASE_URL/$OSX" ]; then
+              if [ -f "$BASE_URL/$OSX" ]; then
                 echo "butler push \"$BASE_URL/$OSX\" $ITCH_USER/$ITCH_GAME:mac ${versionArgument}"
                 butler push "$BASE_URL/$OSX" $ITCH_USER/$ITCH_GAME:mac ${versionArgument}
               else
@@ -62,7 +62,7 @@ jobs:
               fi
           fi
           if [ -n "$LNX" ]; then
-              if [ test -f "$BASE_URL/$LNX" ]; then
+              if [ -f "$BASE_URL/$LNX" ]; then
                 echo "butler push \"$BASE_URL/$LNX\" $ITCH_USER/$ITCH_GAME:linux ${versionArgument}"
                 butler push "$BASE_URL/$LNX" $ITCH_USER/$ITCH_GAME:linux ${versionArgument}
               else
@@ -70,7 +70,7 @@ jobs:
               fi
           fi
           if [ -n "$ANDROID" ]; then
-              if [ test -f "$BASE_URL/$ANDROID" ]; then
+              if [ -f "$BASE_URL/$ANDROID" ]; then
                 echo "butler push \"$BASE_URL/$ANDROID\" $ITCH_USER/$ITCH_GAME:android ${versionArgument}"
                 butler push "$BASE_URL/$ANDROID" $ITCH_USER/$ITCH_GAME:android ${versionArgument}
               else
