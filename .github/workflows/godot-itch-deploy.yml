@@ -48,7 +48,7 @@ jobs:
           fi
           if [ -n "$WIN" ]; then
               wget -q --spider "$BASE_URL/$WIN"
-              if [ $? -eq 0]; then
+              if [ $? -eq 0 ]; then
                 echo "butler push \"$BASE_URL/$WIN\" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}"
                 butler push "$BASE_URL/$WIN" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}
               else
