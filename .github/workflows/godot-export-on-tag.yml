@@ -5,7 +5,9 @@ on:
       - "v*"
 jobs:
   get_version:
-    uses: battila7/get-version-action@v2
+    steps:
+      - name: Get Version
+        uses: battila7/get-version-action@v2
   godot_export_on_tag:
     needs: get_version
     uses: ./github/workflows/godot-export.yml
