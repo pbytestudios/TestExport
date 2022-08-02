@@ -38,7 +38,8 @@ jobs:
               versionArgument="--userversion-file ${VERSION_FILE}"
           fi
           if [ -n "$HTML5" ]; then
-              if [ wget -q --spider "$BASE_URL/$HTML5" -eq 0 ]; then
+              wget -q --spider "$BASE_URL/$HTML5"
+              if [ $? -eq 0 ]; then
                 echo "butler push \"$BASE_URL/$HTML5\" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}"
                 butler push "$BASE_URL/$HTML5" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}
               else
@@ -46,7 +47,8 @@ jobs:
               fi
           fi
           if [ -n "$WIN" ]; then
-              if [ wget -q --spider "$BASE_URL/$WIN" -eq 0]; then
+              wget -q --spider "$BASE_URL/$WIN"
+              if [ $? -eq 0]; then
                 echo "butler push \"$BASE_URL/$WIN\" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}"
                 butler push "$BASE_URL/$WIN" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}
               else
@@ -54,7 +56,8 @@ jobs:
               fi
           fi
           if [ -n "$OSX" ]; then
-              if [ -f "$BASE_URL/$OSX" ]; then
+              wget -q --spider "$BASE_URL/$OSX"
+              if [ $? -eq 0 ]; then
                 echo "butler push \"$BASE_URL/$OSX\" $ITCH_USER/$ITCH_GAME:mac ${versionArgument}"
                 butler push "$BASE_URL/$OSX" $ITCH_USER/$ITCH_GAME:mac ${versionArgument}
               else
@@ -62,7 +65,8 @@ jobs:
               fi
           fi
           if [ -n "$LNX" ]; then
-              if [ -f "$BASE_URL/$LNX" ]; then
+              wget -q --spider "$BASE_URL/$LNX"
+              if [ $? -eq 0 ]; then
                 echo "butler push \"$BASE_URL/$LNX\" $ITCH_USER/$ITCH_GAME:linux ${versionArgument}"
                 butler push "$BASE_URL/$LNX" $ITCH_USER/$ITCH_GAME:linux ${versionArgument}
               else
@@ -70,7 +74,8 @@ jobs:
               fi
           fi
           if [ -n "$ANDROID" ]; then
-              if [ -f "$BASE_URL/$ANDROID" ]; then
+              wget -q --spider "$BASE_URL/$ANDROID"
+              if [ $? -eq 0 ]; then
                 echo "butler push \"$BASE_URL/$ANDROID\" $ITCH_USER/$ITCH_GAME:android ${versionArgument}"
                 butler push "$BASE_URL/$ANDROID" $ITCH_USER/$ITCH_GAME:android ${versionArgument}
               else
