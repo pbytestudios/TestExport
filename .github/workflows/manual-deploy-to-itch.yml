@@ -3,14 +3,13 @@ on:
   workflow_dispatch:
     inputs:
       tag_name:
-        description: 'Name of the tag to export to itch'
+        description: 'Name of the tag where the exports are'
         required: true
         type: string
       itch_ver:
         description: 'Name of the itch version'
         required: false
         type: string
-     
 jobs:
   itch_deploy:
     uses: ./.github/workflows/godot-itch-deploy.yml
