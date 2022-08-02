@@ -1,15 +1,19 @@
-name: godot-manual-itch-deploy
+name: godot-itch-deploy
 on:
-  workflow_dispatch:
+  workflow_call:
       inputs:
+        version_string:
+          description: 'Name of the Version to set in itch'     
+          required: false
+          type: string
         tag_name:
-          description: 'Name of the Tag to put the release under'     
+          description: 'Name of the tag from which to pull the release files'
           required: true
           type: string
 jobs:
-  export_game:
+  deploy_to_itch:
     runs-on: ubuntu-latest
-    name: Manual Itch Deploy
+    name: Itch Deploy
     steps:
       - name: Install Butler
         id: install_butler
@@ -52,7 +56,7 @@ jobs:
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
           ITCH_USER: pixelbyte
-          BASE_URL: ${{ github.server_url }}/${{ github.repository }}/releases/download/${{ github.event.inputs.tag_name }}
+          BASE_URL: ${{ github.server_url }}/${{ github.repository }}/releases/download/${{ inputs.tag_name }}
           ITCH_GAME: example-project
           HTML5: HTML5.zip
           WIN: Windows.zip
@@ -61,4 +65,4 @@ jobs:
           # ANDROID: Android.zip
           #Set the itch deploy version to the tag text
           #assumes  we use this step in a workflow with a tag_version step
-          VERSION: ${{ github.event.inputs.tag_name }}
+          VERSION: ${{ inputs.version_string }}

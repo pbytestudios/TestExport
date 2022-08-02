@@ -4,89 +4,12 @@ on:
     tags:
       - "v*"
 jobs:
-  export_game:
-    runs-on: ubuntu-latest
-    name: Export Job
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3.0.2
-        with:
-          fetch-depth: 0
-          lfs: true
-      - name: get tag from version
-        id: tag_version
-        run: |
-          echo ::set-output name=TAG_VERSION::${GITHUB_REF#refs/tags/v}
-      - name: install wine
-        id: install_wine
-        run: |
-          sudo apt install wine64
-          echo ::set-output name=WINE_PATH::$(which wine64)
-      - name: export game
-        id: export
-        uses: firebelley/godot-export@v4.1.0
-        with:
-          godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/3.5/rc8/Godot_v3.5-rc8_linux_headless.64.zip
-          godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/3.5/rc8/Godot_v3.5-rc8_export_templates.tpz
-          relative_project_path: ./project
-          use_preset_export_path: true
-          archive_output: true
-          wine_path: ${{ steps.install_wine.outputs.WINE_PATH }}
-      - name: create release
-        uses: softprops/action-gh-release@v0.1.14
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          generate_release_notes: true
-          tag_name: ${{ steps.tag_version.outputs.TAG_VERSION }}
-          files: ${{ steps.export.outputs.archive_directory }}/* # Added "/*" at the end is glob pattern match for this action
-      - name: Install Butler
-        id: install_butler
-        run: |
-          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default \
-          && unzip butler.zip \
-          && sudo cp butler /usr/bin \
-          && sudo chmod +x /usr/bin/butler
-      - name: Run Butler Push
-        id: butler_push
-        run: |
-          set -e
-          export BUTLER_API_KEY=$BUTLER_CREDENTIALS
-          versionArgument=""
-          if [[ -z "$VERSION"]]; then
-              versionArgument="--userversion ${VERSION}"
-          elif [[ -z "$VERSION_FILE"]]; then
-              versionArgument="--userversion-file ${VERSION_FILE}"
-          fi
-          if [[ -z "$HTML5"]]; then
-              echo "butler push \"$BASE_URL/$HTML5\" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}"
-              butler push "$BASE_URL/$HTML5" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}
-          fi
-          if [[ -z "$WIN"]]; then
-              echo "butler push \"$BASE_URL/$WIN\" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}"
-              butler push "$BASE_URL/$WIN" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}
-          fi
-          if [[ -z "$OSX"]]; then
-              echo "butler push \"$BASE_URL/$OSX\" $ITCH_USER/$ITCH_GAME:mac ${versionArgument}"
-              butler push "$BASE_URL/$OSX" $ITCH_USER/$ITCH_GAME:mac ${versionArgument}
-          fi
-          if [[ -z "$LNX"]]; then
-              echo "butler push \"$BASE_URL/$LNX\" $ITCH_USER/$ITCH_GAME:linux ${versionArgument}"
-              butler push "$BASE_URL/$LNX" $ITCH_USER/$ITCH_GAME:linux ${versionArgument}
-          fi
-          if [[ -z "$ANDROID"]]; then
-              echo "butler push \"$BASE_URL/$LNX\" $ITCH_USER/$ITCH_GAME:android ${versionArgument}"
-              butler push "$BASE_URL/$LNX" $ITCH_USER/$ITCH_GAME:android ${versionArgument}
-          fi
-        env:
-          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
-          ITCH_USER: pixelbyte
-          BASE_URL: ${{ github.server_url }}/${{ github.repository }}/releases/download/${{ steps.tag_version.outputs.TAG_VERSION }}
-          ITCH_GAME: example-project
-          HTML5: HTML5.zip
-          WIN: Windows.zip
-          # OSX: Mac-Osx.zip
-          # LNX: Linux.zip
-          # ANDROID: Android.zip
-          #Set the itch deploy version to the tag text
-          #assumes  we use this step in a workflow with a tag_version step
-          VERSION: ${{ steps.tag_version.outputs.TAG_VERSION }}
+  get_version:
+    uses: battila7/get-version-action@v2
+  godot_export_on_tag:
+    needs: get_version
+    uses: ./github/workflows/godot-export.yml
+    with:
+      godot_download_sub_path: 3.5/rc8/Godot_v3.5-rc8
+      tag_name: ${{ needs.get_version.outputs.version }}
+      

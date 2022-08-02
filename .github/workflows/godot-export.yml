@@ -1,25 +1,26 @@
-name: godot-manual-export
+name: godot-export
 on:
-  workflow_dispatch:
-      inputs:
-        tag_name:
-          description: 'Name of the Tag to put the release under'     
-          required: true
-          type: string
+  workflow_call:
+    inputs:
+      tag_name:
+        description: 'Name of the tag to post the export results to'
+        required: true
+        type: string
+      godot_download_sub_path:
+        # to get this path right, goto: https://downloads.tuxfamily.org/godotengine/
+        description: 'The rest of the url from which to download Godot and templates'
+        required: true
+        type: string
 jobs:
-  export_game:
+  godot_export:
     runs-on: ubuntu-latest
-    name: Export Job
+    name: Godot Export
     steps:
       - name: checkout
         uses: actions/checkout@v3.0.2
         with:
-          fetch-depth: 0
+          fetch-depth: 1
           lfs: true
-      - name: get tag from version
-        id: tag_version
-        run: |
-          echo ::set-output name=TAG_VERSION::${GITHUB_REF#refs/tags/v}
       - name: install wine
         id: install_wine
         run: |
@@ -29,8 +30,8 @@ jobs:
         id: export
         uses: firebelley/godot-export@v4.1.0
         with:
-          godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/3.5/rc8/Godot_v3.5-rc8_linux_headless.64.zip
-          godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/3.5/rc8/Godot_v3.5-rc8_export_templates.tpz
+          godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/${{ inputs.godot_download_sub_path }}_linux_headless.64.zip
+          godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/${{ inputs.godot_download_sub_path }}_export_templates.tpz
           relative_project_path: ./project
           use_preset_export_path: true
           archive_output: true
@@ -40,5 +41,5 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           generate_release_notes: true
-          tag_name: ${{ github.event.inputs.tag_name }}
+          tag_name: ${{ inputs.tag_name }}
           files: ${{ steps.export.outputs.archive_directory }}/* # Added "/*" at the end is glob pattern match for this action
