@@ -41,9 +41,8 @@ jobs:
           files: ${{ steps.export.outputs.archive_directory }}/* # Added "/*" at the end is glob pattern match for this action
       - name: Install Butler
         id: install_butler
-          # curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default \
         run: |
-          curl -L -o butler.zip https://proto.pixelbytestudios.com/other/misc/butler-linux-amd64.zip \
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default \
           && unzip butler.zip \
           && sudo cp butler /usr/bin \
           && sudo chmod +x /usr/bin/butler
@@ -60,15 +59,41 @@ jobs:
           then
               versionArgument="--userversion-file ${VERSION_FILE}"
           fi
-          echo "butler push \"$PACKAGE\" $ITCH_USER/$ITCH_GAME:$CHANNEL ${versionArgument}"
-          butler push "$PACKAGE" $ITCH_USER/$ITCH_GAME:$CHANNEL ${versionArgument}
+          if ["$HTML5" != ""]
+          then
+              echo "butler push \"$BASE_URL/$HTML5\" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}"
+              butler push "$BASE_URL/$HTML5" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}
+          fi
+          if ["$WIN" != ""]
+          then
+              echo "butler push \"$BASE_URL/$WIN\" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}"
+              butler push "$BASE_URL/$WIN" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}
+          fi
+          if ["$MAC" != ""]
+          then
+              echo "butler push \"$BASE_URL/$MAC\" $ITCH_USER/$ITCH_GAME:mac ${versionArgument}"
+              butler push "$BASE_URL/$MAC" $ITCH_USER/$ITCH_GAME:mac ${versionArgument}
+          fi
+          if ["$LNX" != ""]
+          then
+              echo "butler push \"$BASE_URL/$LNX\" $ITCH_USER/$ITCH_GAME:linux ${versionArgument}"
+              butler push "$BASE_URL/$LNX" $ITCH_USER/$ITCH_GAME:linux ${versionArgument}
+          fi
+          if ["$ANDROID" != ""]
+          then
+              echo "butler push \"$BASE_URL/$LNX\" $ITCH_USER/$ITCH_GAME:android ${versionArgument}"
+              butler push "$BASE_URL/$LNX" $ITCH_USER/$ITCH_GAME:android ${versionArgument}
+          fi
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
-          CHANNEL: html5
-          ITCH_GAME: example-project
           ITCH_USER: pixelbyte
-          # PACKAGE: ${{ steps.export.outputs.url}}
-          PACKAGE: ${{ github.server_url }}/${{ github.repository }}/releases/download/${{ steps.tag_version.outputs.TAG_VERSION }}/HTML5.zip
+          BASE_URL: ${{ github.server_url }}/${{ github.repository }}/releases/download/${{ steps.tag_version.outputs.TAG_VERSION }}
+          ITCH_GAME: example-project
+          HTML5: HTML5.zip
+          WIN: Windows.zip
+          # MAC: Mac.zip
+          # LNX: Linux.zip
+          # ANDROID: Android.zip
           #Set the itch deploy version to the tag text
           #assumes  we use this step in a workflow with a tag_version step
           VERSION: ${{ steps.tag_version.outputs.TAG_VERSION }}
