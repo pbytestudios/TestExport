@@ -10,6 +10,10 @@ on:
           description: 'Name of the tag from which to pull the release files'
           required: true
           type: string
+        itch_project:
+          description: 'Name of the itch project you'll be deploying to'
+          required: true
+          type: string
 jobs:
   deploy_to_itch:
     runs-on: ubuntu-latest
@@ -34,30 +38,50 @@ jobs:
               versionArgument="--userversion-file ${VERSION_FILE}"
           fi
           if [ -n "$HTML5" ]; then
-              echo "butler push \"$BASE_URL/$HTML5\" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}"
-              butler push "$BASE_URL/$HTML5" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}
+              if [ test -f "$BASE_URL/$HTML5" ]; then
+                echo "butler push \"$BASE_URL/$HTML5\" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}"
+                butler push "$BASE_URL/$HTML5" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}
+              else
+                echo "WARN: Unable to find $"$BASE_URL/$HTML5". Skipping
+              fi
           fi
           if [ -n "$WIN" ]; then
-              echo "butler push \"$BASE_URL/$WIN\" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}"
-              butler push "$BASE_URL/$WIN" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}
+              if [ test -f "$BASE_URL/$HTML5" ]; then
+                echo "butler push \"$BASE_URL/$WIN\" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}"
+                butler push "$BASE_URL/$WIN" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}
+              else
+                echo "WARN: Unable to find $"$BASE_URL/$WIN". Skipping
+              fi
           fi
           if [ -n "$OSX" ]; then
-              echo "butler push \"$BASE_URL/$OSX\" $ITCH_USER/$ITCH_GAME:mac ${versionArgument}"
-              butler push "$BASE_URL/$OSX" $ITCH_USER/$ITCH_GAME:mac ${versionArgument}
+              if [ test -f "$BASE_URL/$HTML5" ]; then
+                echo "butler push \"$BASE_URL/$OSX\" $ITCH_USER/$ITCH_GAME:mac ${versionArgument}"
+                butler push "$BASE_URL/$OSX" $ITCH_USER/$ITCH_GAME:mac ${versionArgument}
+              else
+                echo "WARN: Unable to find $"$BASE_URL/$OSX". Skipping
+              fi
           fi
           if [ -n "$LNX" ]; then
-              echo "butler push \"$BASE_URL/$LNX\" $ITCH_USER/$ITCH_GAME:linux ${versionArgument}"
-              butler push "$BASE_URL/$LNX" $ITCH_USER/$ITCH_GAME:linux ${versionArgument}
+              if [ test -f "$BASE_URL/$HTML5" ]; then
+                echo "butler push \"$BASE_URL/$LNX\" $ITCH_USER/$ITCH_GAME:linux ${versionArgument}"
+                butler push "$BASE_URL/$LNX" $ITCH_USER/$ITCH_GAME:linux ${versionArgument}
+              else
+                echo "WARN: Unable to find $"$BASE_URL/$LNX". Skipping
+              fi
           fi
           if [ -n "$ANDROID" ]; then
-              echo "butler push \"$BASE_URL/$LNX\" $ITCH_USER/$ITCH_GAME:android ${versionArgument}"
-              butler push "$BASE_URL/$LNX" $ITCH_USER/$ITCH_GAME:android ${versionArgument}
+              if [ test -f "$BASE_URL/$HTML5" ]; then
+                echo "butler push \"$BASE_URL/$ANDROID\" $ITCH_USER/$ITCH_GAME:android ${versionArgument}"
+                butler push "$BASE_URL/$ANDROID" $ITCH_USER/$ITCH_GAME:android ${versionArgument}
+              else
+                echo "WARN: Unable to find $"$BASE_URL/$ANDROID". Skipping
+              fi
           fi
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
           ITCH_USER: pixelbyte
           BASE_URL: ${{ github.server_url }}/${{ github.repository }}/releases/download/${{ inputs.tag_name }}
-          ITCH_GAME: example-project
+          ITCH_GAME: ${{ inputs.itch_project }}
           HTML5: HTML5.zip
           WIN: Windows.zip
           # OSX: Mac-Osx.zip

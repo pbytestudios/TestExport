@@ -7,6 +7,7 @@ jobs:
   get_version:
     runs-on: ubuntu-latest
     steps:
+      #https://github.com/marketplace/actions/get-version
       - name: Get Version
         uses: battila7/get-version-action@v2
   godot_export_on_tag:
@@ -15,4 +16,11 @@ jobs:
     with:
       godot_download_sub_path: 3.5/rc8/Godot_v3.5-rc8
       tag_name: ${{ needs.get_version.outputs.version }}
+  itch_deploy:
+    needs: godot_export_on_tag
+    uses: ./.github/workflows/godot-itch-deploy.yml
+    with:
+      itch_project: example-project
+      version_string: ${{ needs.get_version.version-without-v }}
+      tag_name: ${{ needs.get_version.version }}
       
