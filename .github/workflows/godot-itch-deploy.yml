@@ -38,7 +38,7 @@ jobs:
               versionArgument="--userversion-file ${VERSION_FILE}"
           fi
           if [ -n "$HTML5" ]; then
-              if [ -f "$BASE_URL/$HTML5" ]; then
+              if [ wget -q --spider "$BASE_URL/$HTML5" == 0 ]; then
                 echo "butler push \"$BASE_URL/$HTML5\" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}"
                 butler push "$BASE_URL/$HTML5" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}
               else
@@ -46,7 +46,7 @@ jobs:
               fi
           fi
           if [ -n "$WIN" ]; then
-              if [ -f "$BASE_URL/$WIN" ]; then
+              if [ wget -q --spider "$BASE_URL/$WIN" == 0]; then
                 echo "butler push \"$BASE_URL/$WIN\" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}"
                 butler push "$BASE_URL/$WIN" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}
               else
