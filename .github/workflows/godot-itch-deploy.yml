@@ -42,7 +42,7 @@ jobs:
                 echo "butler push \"$BASE_URL/$HTML5\" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}"
                 butler push "$BASE_URL/$HTML5" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}
               else
-                echo "WARN: Unable to find $"$BASE_URL/$HTML5". Skipping
+                echo "WARN: Unable to find '$BASE_URL/$HTML5'. Skipping"
               fi
           fi
           if [ -n "$WIN" ]; then
@@ -50,7 +50,7 @@ jobs:
                 echo "butler push \"$BASE_URL/$WIN\" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}"
                 butler push "$BASE_URL/$WIN" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}
               else
-                echo "WARN: Unable to find $"$BASE_URL/$WIN". Skipping
+                echo "WARN: Unable to find '$BASE_URL/$WIN'. Skipping"
               fi
           fi
           if [ -n "$OSX" ]; then
@@ -58,7 +58,7 @@ jobs:
                 echo "butler push \"$BASE_URL/$OSX\" $ITCH_USER/$ITCH_GAME:mac ${versionArgument}"
                 butler push "$BASE_URL/$OSX" $ITCH_USER/$ITCH_GAME:mac ${versionArgument}
               else
-                echo "WARN: Unable to find $"$BASE_URL/$OSX". Skipping
+                echo "WARN: Unable to find '$BASE_URL/$OSX'. Skipping"
               fi
           fi
           if [ -n "$LNX" ]; then
@@ -66,7 +66,7 @@ jobs:
                 echo "butler push \"$BASE_URL/$LNX\" $ITCH_USER/$ITCH_GAME:linux ${versionArgument}"
                 butler push "$BASE_URL/$LNX" $ITCH_USER/$ITCH_GAME:linux ${versionArgument}
               else
-                echo "WARN: Unable to find $"$BASE_URL/$LNX". Skipping
+                echo "WARN: Unable to find '$BASE_URL/$LNX'. Skipping"
               fi
           fi
           if [ -n "$ANDROID" ]; then
@@ -74,7 +74,7 @@ jobs:
                 echo "butler push \"$BASE_URL/$ANDROID\" $ITCH_USER/$ITCH_GAME:android ${versionArgument}"
                 butler push "$BASE_URL/$ANDROID" $ITCH_USER/$ITCH_GAME:android ${versionArgument}
               else
-                echo "WARN: Unable to find $"$BASE_URL/$ANDROID". Skipping
+                echo "WARN: Unable to find '$BASE_URL/$ANDROID'. Skipping"
               fi
           fi
         env:
