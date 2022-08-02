@@ -52,28 +52,28 @@ jobs:
           set -e
           export BUTLER_API_KEY=$BUTLER_CREDENTIALS
           versionArgument=""
-          if [-n "$VERSION"]; then
+          if [! -z "$VERSION"]; then
               versionArgument="--userversion ${VERSION}"
-          elif [-n "$VERSION_FILE"]; then
+          elif [! -z "$VERSION_FILE"]; then
               versionArgument="--userversion-file ${VERSION_FILE}"
           fi
-          if [ -n "$HTML5"]; then
+          if [ ! -z "$HTML5"]; then
               echo "butler push \"$BASE_URL/$HTML5\" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}"
               butler push "$BASE_URL/$HTML5" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}
           fi
-          if [ -n "$WIN"]; then
+          if [ ! -z "$WIN"]; then
               echo "butler push \"$BASE_URL/$WIN\" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}"
               butler push "$BASE_URL/$WIN" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}
           fi
-          if [ -n "$OSX"]; then
+          if [ ! -z "$OSX"]; then
               echo "butler push \"$BASE_URL/$OSX\" $ITCH_USER/$ITCH_GAME:mac ${versionArgument}"
               butler push "$BASE_URL/$OSX" $ITCH_USER/$ITCH_GAME:mac ${versionArgument}
           fi
-          if [ -n "$LNX"]; then
+          if [ ! -z "$LNX"]; then
               echo "butler push \"$BASE_URL/$LNX\" $ITCH_USER/$ITCH_GAME:linux ${versionArgument}"
               butler push "$BASE_URL/$LNX" $ITCH_USER/$ITCH_GAME:linux ${versionArgument}
           fi
-          if [ -n "$ANDROID"]; then
+          if [ ! -z "$ANDROID"]; then
               echo "butler push \"$BASE_URL/$LNX\" $ITCH_USER/$ITCH_GAME:android ${versionArgument}"
               butler push "$BASE_URL/$LNX" $ITCH_USER/$ITCH_GAME:android ${versionArgument}
           fi
