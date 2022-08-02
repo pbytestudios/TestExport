@@ -40,34 +40,34 @@ jobs:
           tag_name: ${{ steps.tag_version.outputs.TAG_VERSION }}
           files: ${{ steps.export.outputs.archive_directory }}/* # Added "/*" at the end is glob pattern match for this action
       - name: Install Butler
-            id: install_butler
-            run: |
-              curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default \
-              && unzip butler.zip \
-              && cp butler /usr/bin \
-              && chmod +x /usr/bin/butler
-            name: Run Butler Push
-            id: butler_push
-            run: |
-              set -e
-              export BUTLER_API_KEY=$BUTLER_CREDENTIALS
-              versionArgument=""
-              if [ "$VERSION" != "" ]
-              then
-                  versionArgument="--userversion ${VERSION}"
-              elif [ "$VERSION_FILE" != "" ]
-              then
-                  versionArgument="--userversion-file ${VERSION_FILE}"
-              fi
-              echo "butler push \"$PACKAGE\" $ITCH_USER/$ITCH_GAME:$CHANNEL ${versionArgument}"
-              butler push "$PACKAGE" $ITCH_USER/$ITCH_GAME:$CHANNEL ${versionArgument}
-            env:
-                  BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
-                  CHANNEL: html5
-                  ITCH_GAME: example-project
-                  ITCH_USER: pixelbyte
-                  # PACKAGE: ${{ steps.export.outputs.url}}
-                  PACKAGE: ${{ github.server_url }}/${{ github.repository }}/releases/download/${{ steps.tag_version.outputs.TAG_VERSION }}/HTML5.zip
-                  #Set the itch deploy version to the tag text
-                  #assumes  we use this step in a workflow with a tag_version step
-                  VERSION: ${{ steps.tag_version.outputs.TAG_VERSION }}
+        id: install_butler
+        run: |
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default \
+          && unzip butler.zip \
+          && cp butler /usr/bin \
+          && chmod +x /usr/bin/butler
+      - name: Run Butler Push
+        id: butler_push
+        run: |
+          set -e
+          export BUTLER_API_KEY=$BUTLER_CREDENTIALS
+          versionArgument=""
+          if [ "$VERSION" != "" ]
+          then
+              versionArgument="--userversion ${VERSION}"
+          elif [ "$VERSION_FILE" != "" ]
+          then
+              versionArgument="--userversion-file ${VERSION_FILE}"
+          fi
+          echo "butler push \"$PACKAGE\" $ITCH_USER/$ITCH_GAME:$CHANNEL ${versionArgument}"
+          butler push "$PACKAGE" $ITCH_USER/$ITCH_GAME:$CHANNEL ${versionArgument}
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+          CHANNEL: html5
+          ITCH_GAME: example-project
+          ITCH_USER: pixelbyte
+          # PACKAGE: ${{ steps.export.outputs.url}}
+          PACKAGE: ${{ github.server_url }}/${{ github.repository }}/releases/download/${{ steps.tag_version.outputs.TAG_VERSION }}/HTML5.zip
+          #Set the itch deploy version to the tag text
+          #assumes  we use this step in a workflow with a tag_version step
+          VERSION: ${{ steps.tag_version.outputs.TAG_VERSION }}
