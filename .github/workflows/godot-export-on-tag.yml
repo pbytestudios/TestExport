@@ -14,8 +14,8 @@ jobs:
         run: |
           curl -L -o butler.zip https://proto.pixelbytestudios.com/other/misc/butler-linux-amd64.zip \
           && unzip butler.zip \
-          && cp butler /usr/bin \
-          && chmod +x /usr/bin/butler
+          && sudo cp butler /usr/bin \
+          && sudo chmod +x /usr/bin/butler
       - name: Run Butler Push
         id: butler_push
         run: |
