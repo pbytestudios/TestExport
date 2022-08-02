@@ -1,4 +1,4 @@
-name: manual-itch-export
+name: manual-itch-deploy
 on:
   workflow_dispatch:
     inputs:
@@ -18,3 +18,4 @@ jobs:
       itch_project: example-project
       version_string: ${{ inputs.itch_ver }}
       tag_name: ${{ inputs.tag_name }}
+    secrets: inherit
