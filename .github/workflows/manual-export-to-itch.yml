@@ -1,0 +1,20 @@
+name: manual-itch-export
+on:
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Name of the tag to export to itch'
+        required: true
+        type: string
+      itch_ver:
+        description: 'Name of the itch version'
+        required: false
+        type: string
+     
+jobs:
+  itch_deploy:
+    uses: ./.github/workflows/godot-itch-deploy.yml
+    with:
+      itch_project: example-project
+      version_string: ${{ inputs.itch_ver }}
+      tag_name: ${{ inputs.tag_name }}

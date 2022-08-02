@@ -17,7 +17,7 @@ jobs:
       godot_download_sub_path: 3.5/rc8/Godot_v3.5-rc8
       tag_name: ${{ needs.get_version.outputs.version }}
   itch_deploy:
-    needs: godot_export_on_tag
+    needs: [get_version, godot_export_on_tag]
     uses: ./.github/workflows/godot-itch-deploy.yml
     with:
       itch_project: example-project
