@@ -6,6 +6,11 @@ on:
           description: 'Name of the Tag to put the release under'     
           required: true
           type: string
+jobs:
+  export_game:
+    runs-on: ubuntu-latest
+    name: Manual Itch Deploy
+    steps:
       - name: Install Butler
         id: install_butler
         run: |
