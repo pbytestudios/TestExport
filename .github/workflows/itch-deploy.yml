@@ -5,7 +5,6 @@ on:
         version_string:
           description: 'Name of the Version to set in itch.'     
           required: false
-          default: ""
           type: string
         tag_name:
           description: 'Name of the tag from which to pull the release files.'
@@ -18,27 +17,22 @@ on:
         html5_archive:
           description: 'Name of the html5 export archive.'
           required: false
-          default: ""
           type: string
         win_archive:
           description: 'Name of the windows export archive.'
           required: false
-          default: ""
           type: string
         osx_archive:
           description: 'Name of the OSX export archive.'
           required: false
-          default: ""
           type: string
         linux_archive:
           description: 'Name of the Linux export archive.'
           required: false
-          default: ""
           type: string
         android_archive:
           description: 'Name of the Android export archive.'
           required: false
-          default: ""
           type: string
 jobs:
   deploy_to_itch:
