@@ -19,7 +19,8 @@ jobs:
   #     exporting_win_build: false
   e_version:
     runs-on: ubuntu-latest
-    name: Hello there
-    id: display
     needs: get_version
-    run: echo Hello ${{ needs.get_version.outputs.version }}
+    steps:
+     - name: Hello there
+       id: display
+       run: echo Hello ${{ needs.get_version.outputs.version }}
