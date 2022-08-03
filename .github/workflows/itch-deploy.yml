@@ -59,8 +59,7 @@ jobs:
           fi
           if [ -n "$HTML5" ]; then
               wget -q --spider "$BASE_URL/$HTML5"
-              retval = $?
-              if [ retval -eq 0 ]; then
+              if [ $? -eq 0 ]; then
                 echo "butler push \"$BASE_URL/$HTML5\" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}"
                 butler push "$BASE_URL/$HTML5" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}
               else
