@@ -12,12 +12,13 @@ jobs:
     steps:
       #https://github.com/marketplace/actions/get-version
       - name: Get Version
+        id: get_ver
         uses: battila7/get-version-action@v2
       - name: Set outputs
         id: ver_out
         run: |
-          echo "::set-output name=version::${{ version }}" &&
-          echo "::set-output name=version-without-v::${{ version-without-v }}"
+          echo "::set-output name=version::${{ get_ver.outputs.version }}" &&
+          echo "::set-output name=version-without-v::${{ get_ver.outputs.version-without-v }}"
   godot_export_on_tag:
     uses: ./.github/workflows/godot-export.yml
     with:
