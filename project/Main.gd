@@ -7,7 +7,7 @@ onready var version = $Control/MC/VBox/Version
 
 func _ready():
 	randomize()
-	VisualServer.set_default_clear_color(Color.black)
+	VisualServer.set_default_clear_color(Color.darkkhaki)
 	
 	for i in range(20):
 		var b = bug.instance()

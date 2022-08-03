@@ -1,4 +1,4 @@
-name: godot-itch-deploy
+name: itch-deploy
 on:
   workflow_call:
       inputs:
@@ -17,7 +17,22 @@ on:
         html5_archive:
           description: 'Name of the html5 export archive.'
           required: false
-          default: HTML5.zip
+          type: string
+        win_archive:
+          description: 'Name of the windows export archive.'
+          required: false
+          type: string
+        osx_archive:
+          description: 'Name of the OSX export archive.'
+          required: false
+          type: string
+        linux_archive:
+          description: 'Name of the Linux export archive.'
+          required: false
+          type: string
+        android_archive:
+          description: 'Name of the Android export archive.'
+          required: false
           type: string
 jobs:
   deploy_to_itch:
@@ -92,9 +107,10 @@ jobs:
           ITCH_USER: pixelbyte
           BASE_URL: ${{ github.server_url }}/${{ github.repository }}/releases/download/${{ inputs.tag_name }}
           ITCH_GAME: ${{ inputs.itch_project }}
-          HTML5: HTML5.zip
-          WIN: Windows.zip
-          # OSX: OSX.zip
-          # LNX: Linux.zip
-          # ANDROID: Android.zip
           VERSION: ${{ inputs.version_string }}
+          #Archives to deploy to itch
+          HTML5: $${{ inputs.html5_archive }}
+          WIN: $${{ inputs.win_archive }}
+          OSX: $${{ inputs.osx_archive }}
+          LNX: $${{ inputs.linux_archive }}
+          ANDROID: $${{ inputs.android_archive }}

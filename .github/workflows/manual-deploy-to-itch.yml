@@ -12,7 +12,7 @@ on:
         type: string
 jobs:
   itch_deploy:
-    uses: ./.github/workflows/godot-itch-deploy.yml
+    uses: ./.github/workflows/itch-deploy.yml
     with:
       itch_project: example-project
       version_string: ${{ inputs.itch_ver }}
