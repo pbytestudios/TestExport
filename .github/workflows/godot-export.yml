@@ -2,6 +2,10 @@ name: godot-export
 on:
   workflow_call:
     inputs:
+      tag_name:
+        description: 'Name of the tag to post the export results to'
+        required: true
+        type: string
       godot_download_sub_path:
         # to get this path right, goto: https://downloads.tuxfamily.org/godotengine/
         description: 'The rest of the url from which to download Godot and templates.'
@@ -45,4 +49,5 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           generate_release_notes: true
+          tag_name: ${{ inputs.tag_name }}
           files: ${{ steps.export.outputs.archive_directory }}/* # Added "/*" at the end is glob pattern match for this action
