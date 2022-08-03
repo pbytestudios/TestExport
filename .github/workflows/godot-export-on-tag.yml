@@ -15,13 +15,13 @@ jobs:
     uses: ./.github/workflows/godot-export.yml
     with:
       godot_download_sub_path: 3.5/rc8/Godot_v3.5-rc8
-      # tag_name: ${{ needs.get_version.outputs.version }}
       exporting_win_build: false
-  itch_deploy:
-    needs: [get_version, godot_export_on_tag]
-    uses: ./.github/workflows/godot-itch-deploy.yml
-    with:
-      itch_project: example-project
-      version_string: ${{ needs.get_version.version-without-v }}
-      tag_name: ${{ needs.get_version.version }}
+      # tag_name: ${{ needs.get_version.outputs.version }}
+  # itch_deploy:
+  #   needs: [get_version, godot_export_on_tag]
+  #   uses: ./.github/workflows/godot-itch-deploy.yml
+  #   with:
+  #     itch_project: example-project
+  #     version_string: ${{ needs.get_version.version-without-v }}
+  #     tag_name: ${{ needs.get_version.version }}
       
