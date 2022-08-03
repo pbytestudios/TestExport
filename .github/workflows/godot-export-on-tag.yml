@@ -25,6 +25,6 @@ jobs:
       tag_name: ${{ needs.get_version.version }}
       #TODO: specify all archive outputs you want deployed to itch
       #Note: These must have the same name as the godot exports in the export_presets.cfg file!
-      html_archive: HTML5.zip
+      html5_archive: HTML5.zip
       win_archive: Windows.zip
       
