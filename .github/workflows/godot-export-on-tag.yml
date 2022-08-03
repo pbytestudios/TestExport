@@ -6,17 +6,11 @@ on:
 jobs:
   get_version:
     runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.ver.version }}
-      version-without-v: ${{ steps.ver.version-without-v }}
     steps:
       #https://github.com/marketplace/actions/get-version
       - name: Get Version
         id: ver
         uses: battila7/get-version-action@v2
-        run: |
-          echo "::set-output name=version::${{ version }}" &&
-          echo "::set-output name=version-without-v::${{ version-without-v }}"
   godot_export_on_tag:
     uses: ./.github/workflows/godot-export.yml
     with:
