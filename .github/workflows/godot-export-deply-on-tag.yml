@@ -16,8 +16,7 @@ jobs:
         with:
           godot_download_sub_path: 3.5/rc8/Godot_v3.5-rc8
           exporting_win_build: false   
-      - name: itch_deploy
-        uses: ./.github/workflows/itch-deploy.yml
+      - uses: ./.github/workflows/itch-deploy.yml
         with:
           itch_project: example-project
           version_string: ${{ steps.get_version.outputs.version-without-v }}
