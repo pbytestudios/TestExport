@@ -1,0 +1,29 @@
+name: godot-export-deploy-on-tag
+on:
+  push:
+    tags:
+      - "v*"
+jobs:
+  export-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      #https://github.com/marketplace/actions/get-version
+      - name: Get Version
+        id: get_ver
+        uses: battila7/get-version-action@v2
+      - name: export
+        uses: ./.github/workflows/godot-export.yml
+        with:
+          godot_download_sub_path: 3.5/rc8/Godot_v3.5-rc8
+          exporting_win_build: false   
+      - name: itch_deploy
+        uses: ./.github/workflows/itch-deploy.yml
+        with:
+          itch_project: example-project
+          version_string: ${{ steps.get_version.outputs.version-without-v }}
+          tag_name: ${{ steps.get_version.outputs.version }}
+          #TODO: specify all archive outputs you want deployed to itch
+          #Note: These must have the same name as the godot exports in the export_presets.cfg file!
+          html5_archive: HTML5.zip
+          win_archive: Windows.zip
+      
