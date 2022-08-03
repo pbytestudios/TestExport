@@ -38,7 +38,6 @@ jobs:
           relative_project_path: ./project
           use_preset_export_path: true
           archive_output: true
-          #Only Specify this IF YOU ARE EXPORTING A WINDOWS BUILD
           wine_path: ${{steps.install_wine.outputs.WINE_PATH }}
       - name: create release
         uses: softprops/action-gh-release@v0.1.14
