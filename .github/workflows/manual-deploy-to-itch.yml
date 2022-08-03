@@ -10,6 +10,16 @@ on:
         description: 'Name of the itch version'
         required: false
         type: string
+      html5_archive:
+        description: 'Name of the html5 export archive.'
+        required: false
+        default: ""
+        type: string
+      win_archive:
+        description: 'Name of the windows export archive.'
+        required: false
+        default: ""
+        type: string
 jobs:
   itch_deploy:
     uses: ./.github/workflows/itch-deploy.yml
@@ -17,4 +27,6 @@ jobs:
       itch_project: example-project
       version_string: ${{ inputs.itch_ver }}
       tag_name: ${{ inputs.tag_name }}
+      html5_archive: ${{ inputs.html5_archive }}
+      win_archive: ${{ inputs.win_archive }}
     secrets: inherit
