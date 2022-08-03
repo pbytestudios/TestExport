@@ -8,7 +8,7 @@ on:
         required: true
         type: string
       exporting_win_build:
-        description: 'Only set to true if exporting a win build in export_presets.cfg. When false, this speeds up exporting significantly.'
+        description: 'Only set to true if exporting a win build in export_presets.cfg. When false, exporting is sped up significantly.'
         default: true
         required: false
         type: boolean

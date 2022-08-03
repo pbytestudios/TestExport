@@ -103,6 +103,7 @@ jobs:
               fi
           fi
         env:
+          #This secret is stored in Gihub secrets (All repositories for a company or specific respository for personal)
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
           ITCH_USER: pixelbyte
           BASE_URL: ${{ github.server_url }}/${{ github.repository }}/releases/download/${{ inputs.tag_name }}
