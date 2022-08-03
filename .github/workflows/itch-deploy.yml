@@ -109,8 +109,8 @@ jobs:
           ITCH_GAME: ${{ inputs.itch_project }}
           VERSION: ${{ inputs.version_string }}
           #Archives to deploy to itch
-          HTML5: $${{ inputs.html5_archive }}
-          WIN: $${{ inputs.win_archive }}
-          OSX: $${{ inputs.osx_archive }}
-          LNX: $${{ inputs.linux_archive }}
-          ANDROID: $${{ inputs.android_archive }}
+          HTML5: ${{ inputs.html5_archive }}
+          WIN: ${{ inputs.win_archive }}
+          OSX: ${{ inputs.osx_archive }}
+          LNX: ${{ inputs.linux_archive }}
+          ANDROID: ${{ inputs.android_archive }}
