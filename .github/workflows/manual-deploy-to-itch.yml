@@ -29,4 +29,5 @@ jobs:
       tag_name: ${{ inputs.tag_name }}
       html5_archive: ${{ inputs.html5_archive }}
       win_archive: ${{ inputs.win_archive }}
+    #THIS IS CRITICAL!
     secrets: inherit
