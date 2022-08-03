@@ -6,6 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
-        script: |
-          const core = require('@actions/core');
-          core.error('This is a bad error. This will also fail the build.')
+        with:
+          script: |
+            const core = require('@actions/core');
+            core.error('This is a bad error. This will also fail the build.')
