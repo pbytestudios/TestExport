@@ -17,22 +17,27 @@ on:
         html5_archive:
           description: 'Name of the html5 export archive.'
           required: false
+          default: ""
           type: string
         win_archive:
           description: 'Name of the windows export archive.'
           required: false
+          default: ""
           type: string
         osx_archive:
           description: 'Name of the OSX export archive.'
           required: false
+          default: ""
           type: string
         linux_archive:
           description: 'Name of the Linux export archive.'
           required: false
+          default: ""
           type: string
         android_archive:
           description: 'Name of the Android export archive.'
           required: false
+          default: ""
           type: string
 jobs:
   deploy_to_itch:
