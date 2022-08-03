@@ -12,8 +12,8 @@ on:
         required: true
         type: string
       exporting_win_build:
-        description: 'Set this to true if you are exporting a windows build in the Godot exports.'
-        default: false
+        description: 'Only set to true if exporting a win build in export_presets.cfg. When false, this speeds up exporting significantly.'
+        default: true
         required: false
         type: boolean
 jobs:
@@ -26,9 +26,9 @@ jobs:
         with:
           fetch-depth: 1
           lfs: true
-      # Only Specify this IF YOU ARE EXPORTING A WINDOWS BUILD
       - name: install wine
         id: install_wine
+        # Only run this if exporting_win_build == true
         if: inputs.exporting_win_build
         run: |
           sudo apt install wine64
@@ -49,5 +49,5 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           generate_release_notes: true
-          tag_name: ${{ inputs.tag_name }}
+          # tag_name: ${{ inputs.tag_name }}
           files: ${{ steps.export.outputs.archive_directory }}/* # Added "/*" at the end is glob pattern match for this action

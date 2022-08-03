@@ -3,16 +3,21 @@ on:
   workflow_call:
       inputs:
         version_string:
-          description: 'Name of the Version to set in itch'     
+          description: 'Name of the Version to set in itch.'     
           required: false
           type: string
         tag_name:
-          description: 'Name of the tag from which to pull the release files'
+          description: 'Name of the tag from which to pull the release files.'
           required: true
           type: string
         itch_project:
-          description: 'Name of the itch project you will deploy to'
+          description: 'Name of the itch project to which you will deploy.'
           required: true
+          type: string
+        html5_archive:
+          description: 'Name of the html5 export archive.'
+          required: false
+          default: HTML5.zip
           type: string
 jobs:
   deploy_to_itch:
@@ -89,9 +94,7 @@ jobs:
           ITCH_GAME: ${{ inputs.itch_project }}
           HTML5: HTML5.zip
           WIN: Windows.zip
-          # OSX: Mac-Osx.zip
+          # OSX: OSX.zip
           # LNX: Linux.zip
           # ANDROID: Android.zip
-          #Set the itch deploy version to the tag text
-          #assumes  we use this step in a workflow with a tag_version step
           VERSION: ${{ inputs.version_string }}
