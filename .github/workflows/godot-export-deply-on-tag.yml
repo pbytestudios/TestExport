@@ -11,8 +11,7 @@ jobs:
       - name: Get Version
         id: get_ver
         uses: battila7/get-version-action@v2
-      - name: export
-        uses: ./.github/workflows/godot-export.yml
+      - uses: ./.github/workflows/godot-export.yml
         with:
           godot_download_sub_path: 3.5/rc8/Godot_v3.5-rc8
           exporting_win_build: false   
