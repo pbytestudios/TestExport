@@ -5,8 +5,8 @@ jobs:
   get_version:
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.get_ver.version }}
-      version-without-v: ${{ steps.get_ver.version-without-v }}
+      version: ${{ steps.get_ver.outputs.version }}
+      version-without-v: ${{ steps.get_ver.outputs.version-without-v }}
     steps:
       #https://github.com/marketplace/actions/get-version
       - name: Get Version
