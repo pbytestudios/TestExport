@@ -30,10 +30,17 @@ jobs:
                 for section in validSections:
                   name = cfg.get(section, 'name').replace('"','')
                   platform = cfg.get(section, 'platform').replace('"','')
+                  print(f"Found {name}.zip on platform '{platform}'")
                   if platform == "Windows Desktop":
                     set_output("win_export", "true")
-                    set_output("win_name", f"{name}.zip")
-                    print(f"name is {name}.zip")
-
+                    set_output("win_artifact", f"{name}.zip")
+                  elif platform == "HTML5":
+                    set_output("html5_artifact", f"{name}.zip")
+                  elif platform == "Mac OSX":
+                    set_output("mac_artifact", f"{name}.zip")
+                  elif platform == "Linux/X11":
+                    set_output("linux_artifact", f"{name}.zip")
+                  elif platform == "Android":
+                    set_output("android_artifact", f"{name}.zip")
           env:
             relative_project_path: ./project

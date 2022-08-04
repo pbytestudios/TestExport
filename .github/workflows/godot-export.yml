@@ -22,10 +22,50 @@ jobs:
         with:
           fetch-depth: 1
           lfs: true
+      - name: Determine Export names
+        id: exportInfo
+        # uses: actions/setup-python@v2
+        # https://github.com/marketplace/actions/run-python-script
+        uses: jannekem/run-python-script-action@v1
+        with:
+          script: |
+              import os
+              from configparser import ConfigParser
+              rel_proj_path = os.environ["relative_project_path"]
+              set_output("win_export", "false")
+              
+              if rel_proj_path is None:
+                error("relative_project_path was not specified!")
+                stop_commands()
+                exit(1)
+
+              cfgFilename = os.path.join(rel_proj_path, "export_presets.cfg")
+              cfg = ConfigParser()
+              cfg.read(cfgFilename)
+              # Grab only the valid sections we want 
+              validSections = list(filter(lambda t : not t.endswith('options') and t.startswith('preset'), cfg.sections()))
+
+              for section in validSections:
+                name = cfg.get(section, 'name').replace('"','')
+                platform = cfg.get(section, 'platform').replace('"','')
+                print(f"Found {name}.zip on platform '{platform}'")
+                if platform == "Windows Desktop":
+                  set_output("win_export", "true")
+                  set_output("win_artifact", f"{name}.zip")
+                elif platform == "HTML5":
+                  set_output("html5_artifact", f"{name}.zip")
+                elif platform == "Mac OSX":
+                  set_output("mac_artifact", f"{name}.zip")
+                elif platform == "Linux/X11":
+                  set_output("linux_artifact", f"{name}.zip")
+                elif platform == "Android":
+                  set_output("android_artifact", f"{name}.zip")
+        env:
+          relative_project_path: ./project
       - name: install wine
         id: install_wine
-        # Only run this if exporting_win_build == true
-        if: inputs.exporting_win_build
+        # Only run this if the export info tells us to (i.e. we are exporting an windows build)
+        if: steps.exportInfo.win_export
         run: |
           sudo apt install wine64
           echo ::set-output name=WINE_PATH::$(which wine64)
