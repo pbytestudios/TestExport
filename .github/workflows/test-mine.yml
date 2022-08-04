@@ -20,7 +20,7 @@ jobs:
             ext: ".zip"
         - name: Print files
           run: |
-            echo ${{ steps.list-files.paths }}
+            echo ${{ fromJson(steps.list-files.paths) }}
 
 
         # - uses: actions/checkout@v2
