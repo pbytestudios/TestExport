@@ -18,7 +18,7 @@ jobs:
                 
                 if rel_proj_path is None:
                   error("relative_project_path was not specified!")
-                  return 1
+                  exit(1)
 
                 cfgFilename = os.path.join(rel_proj_path, "export_presets.cfg")
                 cfg = ConfigParser()
