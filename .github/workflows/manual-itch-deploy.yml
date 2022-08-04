@@ -12,7 +12,7 @@ on:
         default: example-project
         type: string
 jobs:
-  get_stuff:
+  get_info:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.ver.outputs.version }}
@@ -37,15 +37,16 @@ jobs:
         with:
           relative_project_path: ./project
   itch_deploy:
+    needs: get_info
     uses: ./.github/workflows/itch-deploy.yml
     with:
       itch_project: ${{ inputs.project_name }}
       tag_name: ${{ inputs.tag_name }}
-      version_string: ${{ outputs.version-without-v }}
-      html5_archive: ${{ outputs.html5_artifact }}
-      win_archive: ${{ outputs.windows_artifact }}
-      osx_archive: ${{ outputs.osx_artifact }}
-      linux_archive: ${{ outputs.linux_artifact }}
-      android_archive: ${{ outputs.android_artifact }}
+      version_string: ${{ needs.get_info.outputs.version-without-v }}
+      html5_archive: ${{ needs.get_info.outputs.html5_artifact }}
+      win_archive: ${{ needs.get_info.outputs.windows_artifact }}
+      osx_archive: ${{ needs.get_info.outputs.osx_artifact }}
+      linux_archive: ${{ needs.get_info.outputs.linux_artifact }}
+      android_archive: ${{ needs.get_info.outputs.android_artifact }}
     #THIS IS CRITICAL!
     secrets: inherit
