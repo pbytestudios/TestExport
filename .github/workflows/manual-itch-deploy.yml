@@ -10,43 +10,41 @@ on:
         description: 'Name of the project on itch.io'
         required: true
         type: string
-      itch_ver:
-        description: 'Name of the itch version'
-        required: false
-        type: string
-      html5_archive:
-        description: 'Name of the html5 export archive.'
-        required: false
-        default: ""
-        type: string
-      win_archive:
-        description: 'Name of the windows export archive.'
-        required: false
-        default: ""
-        type: string
 jobs:
-  # get:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-  #       with:
-  #         ref: ${{ inputs.tag_name }}
-  #     - name: Get Version
-  #       id: ver
-  #       uses: battila7/get-version-action@v2
-  #     - name: Get Godot Project Info
-  #       id: project_info
-  #       uses: pbytestudios/Godot-info-action@master
-  #       with:
-  #         relative_project_path: ./project
+  get:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.ver.outputs.version }}
+      version-without-v: ${{ steps.ver.outputs.version-without-v }}
+      require_wine: ${{ steps.info.outputs.require_wine }}
+      html5_artifact: ${{ steps.info.outputs.html5_artifact }}
+      windows_artifact: ${{ steps.info.outputs.windows_artifact }}
+      osx_artifact: ${{ steps.info.outputs.osx_artifact }}
+      linux_artifact: ${{ steps.info.outputs.linux_artifact }}
+      android_artifact: ${{ steps.info.outputs.android_artifact }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ inputs.tag_name }}
+      - name: Get Version
+        id: ver
+        uses: battila7/get-version-action@v2
+      - name: Get Godot Project Info
+        id: info
+        uses: pbytestudios/Godot-info-action@master
+        with:
+          relative_project_path: ./project
   itch_deploy:
     uses: ./.github/workflows/itch-deploy.yml
     with:
       itch_project: ${{ inputs.project_name }}
-      version_string: ${{ inputs.itch_ver }}
       tag_name: ${{ inputs.tag_name }}
-      html5_archive: ${{ inputs.html5_archive }}
-      win_archive: ${{ inputs.win_archive }}
+      version_string: ${{ outputs.version-without-v }}
+      html5_archive: ${{ outputs.html5_artifact }}
+      win_archive: ${{ outputs.windows_artifact }}
+      osx_archive: ${{ outputs.osx_artifact }}
+      linux_archive: ${{ outputs.linux_artifact }}
+      android_archive: ${{ outputs.android_artifact }}
     #THIS IS CRITICAL!
     secrets: inherit
