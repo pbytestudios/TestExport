@@ -12,7 +12,7 @@ on:
         default: example-project
         type: string
 jobs:
-  get:
+  get_stuff:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.ver.outputs.version }}
