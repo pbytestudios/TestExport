@@ -2,7 +2,7 @@ name: test-mine
 on:
   workflow_dispatch:
 jobs:
-  test_python:
+  test_mine:
     runs-on: ubuntu-latest
     steps:
         - uses: actions/checkout@v2
