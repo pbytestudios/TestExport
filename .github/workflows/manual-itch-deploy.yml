@@ -6,18 +6,17 @@ on:
         description: 'Name of the tag where the exports are'
         required: true
         type: string
-      itch_ver:
-        description: 'Name of the itch version'
-        required: false
-        type: string
 jobs:
   get_it:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.02
+        uses: actions/checkout@v2
         with:
           ref: ${{ inputs.tag_name }}
+      - name: Get Version
+        id: ver
+        uses: battila7/get-version-action@v2
       - name: Get Godot Project Info
         id: project_info
         uses: pbytestudios/Godot-info-action@master
@@ -27,8 +26,8 @@ jobs:
         uses: ./.github/workflows/itch-deploy.yml
         with:
           itch_project: example-project
-          version_string: ${{ inputs.itch_ver }}
+          version_string: ${{ steps.ver.outputs.version-without-v }}
           tag_name: ${{ inputs.tag_name }}
-          win_archive: ${{ steps.project_info.windows_artifact }}
-          html5_archive: ${{ steps.project_info.html5_artifact }}
+          win_archive: ${{ steps.project_info.outputs.windows_artifact }}
+          html5_archive: ${{ steps.project_info.outputs.html5_artifact }}
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
