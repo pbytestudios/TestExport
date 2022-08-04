@@ -71,8 +71,8 @@ jobs:
               fi
           }
           
-          butler_export $HTML5 "html5"
-          butler_export $WIN "windows"
+          butler_export ${HTML5-} "html5"
+          butler_export ${WIN-} "windows"
           butler_export $OSX "mac"
           butler_export $LNX "linux"
           butler_export $ANDROID "android"
