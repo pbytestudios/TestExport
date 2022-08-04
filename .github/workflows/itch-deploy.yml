@@ -72,51 +72,7 @@ jobs:
 
           butler_export $HTML5 "html5"
 
-          if [ -n "$HTML5" ]; then
-              wget -q --spider "$BASE_URL/$HTML5"
-              if [ $? -eq 0 ]; then
-                echo "butler push \"$BASE_URL/$HTML5\" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}"
-                butler push "$BASE_URL/$HTML5" $ITCH_USER/$ITCH_GAME:html5 ${versionArgument}
-              else
-                echo "WARN: Unable to find '$BASE_URL/$HTML5'. Skipping"
-              fi
-          fi
-          if [ -n "$WIN" ]; then
-              wget -q --spider "$BASE_URL/$WIN"
-              if [ $? -eq 0 ]; then
-                echo "butler push \"$BASE_URL/$WIN\" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}"
-                butler push "$BASE_URL/$WIN" $ITCH_USER/$ITCH_GAME:windows ${versionArgument}
-              else
-                echo "WARN: Unable to find '$BASE_URL/$WIN'. Skipping"
-              fi
-          fi
-          if [ -n "$OSX" ]; then
-              wget -q --spider "$BASE_URL/$OSX"
-              if [ $? -eq 0 ]; then
-                echo "butler push \"$BASE_URL/$OSX\" $ITCH_USER/$ITCH_GAME:mac ${versionArgument}"
-                butler push "$BASE_URL/$OSX" $ITCH_USER/$ITCH_GAME:mac ${versionArgument}
-              else
-                echo "WARN: Unable to find '$BASE_URL/$OSX'. Skipping"
-              fi
-          fi
-          if [ -n "$LNX" ]; then
-              wget -q --spider "$BASE_URL/$LNX"
-              if [ $? -eq 0 ]; then
-                echo "butler push \"$BASE_URL/$LNX\" $ITCH_USER/$ITCH_GAME:linux ${versionArgument}"
-                butler push "$BASE_URL/$LNX" $ITCH_USER/$ITCH_GAME:linux ${versionArgument}
-              else
-                echo "WARN: Unable to find '$BASE_URL/$LNX'. Skipping"
-              fi
-          fi
-          if [ -n "$ANDROID" ]; then
-              wget -q --spider "$BASE_URL/$ANDROID"
-              if [ $? -eq 0 ]; then
-                echo "butler push \"$BASE_URL/$ANDROID\" $ITCH_USER/$ITCH_GAME:android ${versionArgument}"
-                butler push "$BASE_URL/$ANDROID" $ITCH_USER/$ITCH_GAME:android ${versionArgument}
-              else
-                echo "WARN: Unable to find '$BASE_URL/$ANDROID'. Skipping"
-              fi
-          fi
+
         env:
           #This secret is stored in Gihub secrets (All repositories for a company or specific respository for personal)
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
