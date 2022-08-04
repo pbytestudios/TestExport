@@ -1,29 +1,11 @@
 name: test-mine
 on:
   workflow_dispatch:
-    inputs:
-      tag_name:
-        description: 'Name of the tag where the exports are'
-        required: true
-        type: string
 jobs:
   test_mine:
     runs-on: ubuntu-latest
     steps:
-        - name: List Files
-          uses: mirko-felice/list-files-action@v3.0.1
-          id: list-files
+        - uses: actions/checkout@v2
+        - uses: pbytestudios/Godot-info-action@master
           with:
-            repo: ${{ github.repository }}
-            ref: ${{ inputs.tag_name }}
-            path: "."
-            ext: ".zip"
-        - name: Print files
-          run: |
-            echo ${{ fromJson(steps.list-files.paths) }}
-
-
-        # - uses: actions/checkout@v2
-        # - uses: pbytestudios/Godot-info-action@master
-        #   with:
-        #     relative_project_path: ./project
+            relative_project_path: ./project
