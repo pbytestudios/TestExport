@@ -60,7 +60,7 @@ jobs:
           
           butler_export(){
               if [[ -n "$1" ]]; then
-                echo "Ok let's go..."
+                echo "Exporting $1..."
                 wget -q --spider "$BASE_URL/$1"
                 if [ $? -eq 0 ]; then
                   echo "butler push \"$BASE_URL/$1\" $ITCH_USER/$ITCH_GAME:$2 ${versionArgument}"
