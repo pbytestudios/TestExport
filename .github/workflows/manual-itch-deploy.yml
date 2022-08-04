@@ -23,7 +23,7 @@ jobs:
         with:
           relative_project_path: ./project
       - name: Deploy to Itch
-        uses: ./.github/workflows/itch-deploy.yml
+        uses: ./.github/workflows/itch-deploy
         with:
           itch_project: example-project
           version_string: ${{ steps.ver.outputs.version-without-v }}
