@@ -57,6 +57,21 @@ jobs:
           elif [ -n "$VERSION_FILE" ]; then
               versionArgument="--userversion-file ${VERSION_FILE}"
           fi
+          
+          butler_export(){
+              if [ -n $1 ]; then
+                wget -q --spider "$BASE_URL/$1"
+                if [ $? -eq 0 ]; then
+                  echo "butler push \"$BASE_URL/$1\" $ITCH_USER/$ITCH_GAME:$2 ${versionArgument}"
+                  butler push "$BASE_URL/$1" $ITCH_USER/$ITCH_GAME:$2 ${versionArgument}
+                else
+                  echo "WARN: Unable to find '$BASE_URL/$HTML5'. Skipping"
+                fi
+              fi
+          }
+
+          butler_export $HTML5 "html5"
+
           if [ -n "$HTML5" ]; then
               wget -q --spider "$BASE_URL/$HTML5"
               if [ $? -eq 0 ]; then
