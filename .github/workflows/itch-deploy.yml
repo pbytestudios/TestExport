@@ -67,8 +67,6 @@ jobs:
                 else
                   echo "WARN: Unable to find '$BASE_URL/$HTML5'. Skipping"
                 fi
-              else
-                echo "not found"
               fi
           }
           
