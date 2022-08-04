@@ -9,6 +9,7 @@ on:
       project_name:
         description: 'Name of the project on itch.io'
         required: true
+        default: example-project
         type: string
 jobs:
   get:
