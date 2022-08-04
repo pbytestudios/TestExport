@@ -17,11 +17,11 @@ jobs:
       android_artifact: ${{ steps.project_info.outputs.android_artifact }}
     steps:
       #https://github.com/marketplace/actions/get-version
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Get Version
         id: get_ver
         uses: battila7/get-version-action@v2
-      - name: Checkout
-        uses: actions/checkout@v2
       - name: Get Godot Project Info
         id: project_info
         uses: pbytestudios/Godot-info-action@master
