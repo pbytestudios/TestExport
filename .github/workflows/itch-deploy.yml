@@ -69,9 +69,12 @@ jobs:
                 fi
               fi
           }
-
+          
           butler_export $HTML5 "html5"
-
+          butler_export $WIN "windows"
+          butler_export $OSX "mac"
+          butler_export $LNX "linux"
+          butler_export $ANDROID "android"
 
         env:
           #This secret is stored in Gihub secrets (All repositories for a company or specific respository for personal)
