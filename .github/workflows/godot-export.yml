@@ -24,8 +24,7 @@ jobs:
           lfs: true
       - name: install wine
         id: install_wine
-        # Only run this if exporting_win_build == true
-        if: inputs.exporting_win_build
+        if: inputs.exporting_win_build == true
         run: |
           sudo apt install wine64
           echo ::set-output name=WINE_PATH::$(which wine64)

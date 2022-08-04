@@ -4,32 +4,47 @@ on:
     tags:
       - "v*"
 jobs:
-  export-deploy:
+  get_info:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.get_ver.outputs.version }}
       version-without-v: ${{ steps.get_ver.outputs.version-without-v }}
+      require_wine: ${{ steps.project_info.outputs.require_wine }}
+      html5_artifact: ${{ steps.project_info.outputs.html5_artifact }}
+      windows_artifact: ${{ steps.project_info.outputs.windows_artifact }}
+      osx_artifact: ${{ steps.project_info.outputs.osx_artifact }}
+      linux_artifact: ${{ steps.project_info.outputs.linux_artifact }}
+      android_artifact: ${{ steps.project_info.outputs.android_artifact }}
     steps:
       #https://github.com/marketplace/actions/get-version
       - name: Get Version
         id: get_ver
         uses: battila7/get-version-action@v2
+      - name: Get Godot Project Info
+        id: project_info
+        uses: pbytestudios/Godot-info-action@master
+        with:
+          relative_project_path: ./project
   godot_export:
+    needs: get_info
     uses: ./.github/workflows/godot-export.yml
     with:
       godot_download_sub_path: 3.5/rc8/Godot_v3.5-rc8
-      exporting_win_build: false   
+      exporting_win_build: ${{ needs.get_info.outputs.require_wine }}   
   itch_deploy:
-    needs: [export-deploy, godot_export]
+    needs: [get_info, godot_export]
     uses: ./.github/workflows/itch-deploy.yml
     with:
       itch_project: example-project
-      version_string: ${{ needs.export-deploy.outputs.version-without-v }}
-      tag_name: ${{ needs.export-deploy.outputs.version }}
+      version_string: ${{ needs.get_info.outputs.version-without-v }}
+      tag_name: ${{ needs.get_info.outputs.version }}
       #TODO: specify all archive outputs you want deployed to itch
       #Note: These must have the same name as the godot exports in the export_presets.cfg file!
-      html5_archive: HTML5.zip
-      win_archive: Windows.zip
+      html5_archive: ${{ needs.get_info.outputs.html5_artifact }} 
+      win_archive: ${{ needs.get_info.outputs.windows_artifact }} 
+      osx_archive: ${{ needs.get_info.outputs.osx_artifact }}
+      linux_archive: ${{ needs.get_info.outputs.linux_artifact }}
+      android_archive: ${{ needs.get_info.outputs.android_artifact }}
     #THIS IS CRITICAL!
     secrets: inherit
       
