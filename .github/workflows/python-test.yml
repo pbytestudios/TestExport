@@ -9,7 +9,6 @@ jobs:
         # - uses: actions/setup-python@v2
         - uses: jannekem/run-python-script-action@v1
           with:
-            relative_project_path: ./project
             script: |
                 import os
                 from configparser import ConfigParser
@@ -17,4 +16,6 @@ jobs:
                 print(f'relative_dir: {get_input("relative_project_path")}')
                 print("Directory contents:")
                 for f in os.listdir():
-                    print(f)
+                  print(f)
+          env:
+            relative_project_path: ./project
