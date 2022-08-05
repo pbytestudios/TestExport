@@ -6,11 +6,6 @@ on:
         description: 'Name of the tag where the exports are'
         required: true
         type: string
-      project_name:
-        description: 'Name of the project on itch.io'
-        required: true
-        default: example-project
-        type: string
 jobs:
   get_info:
     runs-on: ubuntu-latest
@@ -23,6 +18,7 @@ jobs:
       osx_artifact: ${{ steps.info.outputs.osx_artifact }}
       linux_artifact: ${{ steps.info.outputs.linux_artifact }}
       android_artifact: ${{ steps.info.outputs.android_artifact }}
+      itch_project_name: ${{ steps.info.outputs.itch_project }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -40,7 +36,7 @@ jobs:
     needs: get_info
     uses: ./.github/workflows/itch-deploy.yml
     with:
-      itch_project: ${{ inputs.project_name }}
+      itch_project: ${{ needs.get_info.outputs.itch_project_name }}
       tag_name: ${{ inputs.tag_name }}
       version_string: ${{ needs.get_info.outputs.version-without-v }}
       html5_archive: ${{ needs.get_info.outputs.html5_artifact }}
