@@ -15,6 +15,7 @@ jobs:
       osx_artifact: ${{ steps.project_info.outputs.osx_artifact }}
       linux_artifact: ${{ steps.project_info.outputs.linux_artifact }}
       android_artifact: ${{ steps.project_info.outputs.android_artifact }}
+      itch_project_name: ${{ steps.project_info.outputs.itch_project }}
     steps:
       #https://github.com/marketplace/actions/get-version
       - name: Checkout
@@ -37,7 +38,7 @@ jobs:
     needs: [get_info, godot_export]
     uses: ./.github/workflows/itch-deploy.yml
     with:
-      itch_project: example-project
+      itch_project: ${{ needs.get_info.outputs.itch_project_name }}
       version_string: ${{ needs.get_info.outputs.version-without-v }}
       tag_name: ${{ needs.get_info.outputs.version }}
       #TODO: specify all archive outputs you want deployed to itch
