@@ -32,7 +32,7 @@ jobs:
     needs: get_info
     uses: ./.github/workflows/godot-export.yml
     with:
-      godot_download_sub_path: 3.5/rc8/Godot_v3.5-rc8
+      godot_download_sub_path: 3.5/Godot_v3.5-stable
       exporting_win_build: ${{ needs.get_info.outputs.require_wine == 'true' }}   
   itch_deploy:
     needs: [get_info, godot_export]
