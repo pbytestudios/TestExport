@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Bug.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/Bat.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
 [ext_resource path="res://Version.tres" type="Resource" id=3]
+[ext_resource path="res://scenes/Skeleton.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/Ghost.tscn" type="PackedScene" id=5]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -11,7 +13,7 @@ _data = {
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 2 )
-bug = ExtResource( 1 )
+entities = [ ExtResource( 1 ), ExtResource( 5 ), ExtResource( 4 ) ]
 info = ExtResource( 3 )
 
 [node name="Control" type="Control" parent="."]
@@ -28,33 +30,38 @@ custom_constants/margin_bottom = 10
 
 [node name="VBox" type="VBoxContainer" parent="Control/MC"]
 margin_left = 10.0
-margin_top = 74.0
+margin_top = 83.0
 margin_right = 310.0
-margin_bottom = 106.0
+margin_bottom = 97.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
 
 [node name="Label" type="Label" parent="Control/MC/VBox"]
-margin_left = 101.0
-margin_right = 199.0
-margin_bottom = 14.0
+margin_left = 115.0
+margin_right = 184.0
+margin_bottom = 5.0
 size_flags_horizontal = 4
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Hairy munsters"
+text = "Some Munsters"
 align = 1
 
 [node name="Version" type="Label" parent="Control/MC/VBox"]
-margin_left = 126.0
-margin_top = 18.0
-margin_right = 174.0
-margin_bottom = 32.0
+margin_left = 132.0
+margin_top = 9.0
+margin_right = 167.0
+margin_bottom = 14.0
 size_flags_horizontal = 4
-custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Version"
+align = 1
+
+[node name="Attribution" type="Label" parent="Control"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -14.0
+size_flags_horizontal = 4
+text = "Artwork created by Luis Zuno (@ansimuz)"
 align = 1
 
 [node name="Path2D" type="Path2D" parent="."]
 position = Vector2( 12, 6 )
 curve = SubResource( 1 )
-
-[node name="Bug" parent="Path2D" instance=ExtResource( 1 )]
