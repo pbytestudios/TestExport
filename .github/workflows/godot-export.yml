@@ -26,6 +26,7 @@ jobs:
         id: install_wine
         if: inputs.exporting_win_build == true
         run: |
+          sudo apt-get update
           sudo apt install wine64
           echo ::set-output name=WINE_PATH::$(which wine64)
       - name: export game
