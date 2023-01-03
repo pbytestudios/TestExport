@@ -30,9 +30,9 @@ custom_constants/margin_bottom = 10
 
 [node name="VBox" type="VBoxContainer" parent="Control/MC"]
 margin_left = 10.0
-margin_top = 83.0
+margin_top = 78.0
 margin_right = 310.0
-margin_bottom = 97.0
+margin_bottom = 101.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
 
@@ -44,11 +44,20 @@ size_flags_horizontal = 4
 text = "Crazy walkers but no rangers..."
 align = 1
 
+[node name="Label2" type="Label" parent="Control/MC/VBox"]
+margin_left = 32.0
+margin_top = 9.0
+margin_right = 268.0
+margin_bottom = 14.0
+size_flags_horizontal = 4
+text = "What is a walker but a Texan... a specific texan"
+align = 1
+
 [node name="Version" type="Label" parent="Control/MC/VBox"]
 margin_left = 132.0
-margin_top = 9.0
+margin_top = 18.0
 margin_right = 167.0
-margin_bottom = 14.0
+margin_bottom = 23.0
 size_flags_horizontal = 4
 text = "Version"
 align = 1
