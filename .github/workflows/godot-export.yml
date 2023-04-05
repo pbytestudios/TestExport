@@ -33,7 +33,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt install wine64
-          echo ::set-output name=WINE_PATH::$(which wine64)
+          echo "set-output name=WINE_PATH::$(which wine64)" >> $GITHUB_OUTPUT
       - name: export game
         id: export
         uses: firebelley/godot-export@v5.0.0
