@@ -41,7 +41,7 @@ jobs:
           godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/${{ inputs.godot_download_sub_path }}_linux_headless.64.zip
           godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/${{ inputs.godot_download_sub_path }}_export_templates.tpz
           relative_project_path: ./project
-          use_godot_3 : inputs.use_godot3
+          use_godot_3 : ${{inputs.use_godot3}}
           use_preset_export_path: true
           archive_output: true
           wine_path: ${{ steps.install_wine.outputs.WINE_PATH }}
