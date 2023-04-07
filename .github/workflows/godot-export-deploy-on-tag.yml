@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v3.3.0
       - name: Get Version
         id: get_ver
-        uses: battila7/get-version-action@v2.2.1
+        uses: battila7/Simply007/get-version-action@v2
       - name: Get Godot Project Info
         id: project_info
         uses: pbytestudios/Godot-info-action@master
