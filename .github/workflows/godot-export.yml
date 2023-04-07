@@ -50,5 +50,5 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           generate_release_notes: true
-          tag: {{ github.ref_name}}
+          tag: ${{ github.ref_name}}
           artifacts: ${{ steps.export.outputs.archive_directory }}/* # Added "/*" at the end is glob pattern match for this action
