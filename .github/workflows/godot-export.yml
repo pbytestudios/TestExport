@@ -44,10 +44,11 @@ jobs:
           use_godot_3 : inputs.use_godot3
           use_preset_export_path: true
           archive_output: true
-          wine_path: ${{steps.install_wine.outputs.WINE_PATH }}
+          wine_path: ${{ steps.install_wine.outputs.WINE_PATH }}
       - name: create release
-        uses: softprops/action-gh-release@v0.1.15
+        uses: ncipollo/release-action@v1.12.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           generate_release_notes: true
-          files: ${{ steps.export.outputs.archive_directory }}/* # Added "/*" at the end is glob pattern match for this action
+          tag: {{ github.ref_name}}
+          artifacts: ${{ steps.export.outputs.archive_directory }}/* # Added "/*" at the end is glob pattern match for this action
