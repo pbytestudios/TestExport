@@ -12,15 +12,14 @@ on:
         required: false
         type: boolean
 env:
-  GODOT_VERSION : "4.2.2"
-  GODOT_BUILD : "stable"
+  GODOT_BASE_URL : "https://github.com/godotengine/godot/releases/download"
 jobs:
   godot_export:
     runs-on: ubuntu-latest
     name: Godot Export
     steps:
       - name: checkout
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v4
         with:
           fetch-depth: 1
           lfs: true
@@ -35,8 +34,8 @@ jobs:
         id: export
         uses: firebelley/godot-export@v6.0.0
         with:
-          godot_executable_download_url: "https://github.com/godotengine/godot/releases/download/${{ env.GODOT_VERSION }}-${{ env.GODOT_BUILD }}/Godot_v${{ env.GODOT_VERSION }}-${{ env.GODOT_BUILD }}_linux.x86_64.zip"
-          godot_export_templates_download_url: "https://github.com/godotengine/godot/releases/download/${{ env.GODOT_VERSION }}-${{ env.GODOT_BUILD }}/Godot_v${{ env.GODOT_VERSION }}-${{ env.GODOT_BUILD }}_export_templates.tpz"
+          godot_executable_download_url: "${{ env.GODOT_BASE_URL }}/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip"
+          godot_export_templates_download_url: "${{ env.GODOT_BASE_URL }}/4.2.2-stable/Godot_v4.2.2-stable_export_templates.tpz"
           relative_project_path: ./project
           use_preset_export_path: true
           archive_output: true
