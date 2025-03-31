@@ -1,3 +1,3 @@
 extends Resource
 
-export (float) var version:float
+@export var version: float

@@ -1,7 +1,7 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bg4ao2a16s13p"]
 
-[ext_resource path="res://resource/res_game_version.gd" type="Script" id=1]
+[ext_resource type="Script" uid="uid://blrk7k7dllmu6" path="res://resource/res_game_version.gd" id="1"]
 
 [resource]
-script = ExtResource( 1 )
-version = 0.08
+script = ExtResource("1")
+version = 0.09
