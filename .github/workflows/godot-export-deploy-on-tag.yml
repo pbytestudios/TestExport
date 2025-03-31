@@ -19,10 +19,10 @@ jobs:
     steps:
       #https://github.com/marketplace/actions/get-version
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3.3.0
       - name: Get Version
         id: get_ver
-        uses: battila7/get-version-action@v2
+        uses: Simply007/get-version-action@v2
       - name: Get Godot Project Info
         id: project_info
         uses: pbytestudios/Godot-info-action@master
@@ -32,7 +32,7 @@ jobs:
     needs: get_info
     uses: ./.github/workflows/godot-export.yml
     with:
-      godot_download_sub_path: 3.5.2/rc1/Godot_v3.5.2-rc1
+      godot_download_sub_path: 3.5.2/Godot_v3.5.2-stable
       exporting_win_build: ${{ needs.get_info.outputs.require_wine == 'true' }}   
   itch_deploy:
     needs: [get_info, godot_export]
@@ -50,4 +50,3 @@ jobs:
       android_archive: ${{ needs.get_info.outputs.android_artifact }}
     #THIS IS CRITICAL!
     secrets: inherit
-      

@@ -12,13 +12,18 @@ on:
         default: true
         required: false
         type: boolean
+      use_godot3:
+        description: 'Set to true if you want to use Godot 3, false for Godot 4'
+        default: true
+        required: false
+        type: boolean
 jobs:
   godot_export:
     runs-on: ubuntu-latest
     name: Godot Export
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3.3.0
         with:
           fetch-depth: 1
           lfs: true
@@ -28,20 +33,22 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt install wine64
-          echo ::set-output name=WINE_PATH::$(which wine64)
+          echo "set-output name=WINE_PATH::$(which wine64)" >> $GITHUB_OUTPUT
       - name: export game
         id: export
-        uses: firebelley/godot-export@v4.5.0
+        uses: firebelley/godot-export@v5.0.0
         with:
           godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/${{ inputs.godot_download_sub_path }}_linux_headless.64.zip
           godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/${{ inputs.godot_download_sub_path }}_export_templates.tpz
           relative_project_path: ./project
+          use_godot_3 : ${{ inputs.use_godot3 }}
           use_preset_export_path: true
           archive_output: true
-          wine_path: ${{steps.install_wine.outputs.WINE_PATH }}
+          wine_path: ${{ steps.install_wine.outputs.WINE_PATH }}
       - name: create release
-        uses: softprops/action-gh-release@v0.1.14
+        uses: ncipollo/release-action@v1.12.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          generate_release_notes: true
-          files: ${{ steps.export.outputs.archive_directory }}/* # Added "/*" at the end is glob pattern match for this action
+          generateReleaseNotes: true
+          tag: ${{ github.ref_name}}
+          artifacts: ${{ steps.export.outputs.archive_directory }}/* # Added "/*" at the end is glob pattern match for this action

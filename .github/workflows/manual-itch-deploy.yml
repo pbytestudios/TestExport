@@ -21,12 +21,12 @@ jobs:
       itch_project_name: ${{ steps.info.outputs.itch_project }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3.3.0
         with:
           ref: ${{ inputs.tag_name }}
       - name: Get Version
         id: ver
-        uses: battila7/get-version-action@v2
+        uses: Simply007/get-version-action@v2
       - name: Get Godot Project Info
         id: info
         uses: pbytestudios/Godot-info-action@master
